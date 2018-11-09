@@ -12,8 +12,8 @@ public class World {
 	private double startVelY = 0;
 	private double velX = startVelX;
 	private double velY = startVelY;
-	private double homeX;
-	private double homeY;
+	private double homeX = 400;
+	private double homeY = 400;
 	
 	private double defaultCoef = 10;
 	private double homeCoef = 10;
@@ -21,21 +21,23 @@ public class World {
 
 	private boolean stopped = false;
 	private double maxStopDist = 10;
-	private int posArraySize = 5000;
-	private double[] posArrayX = new double[posArraySize];
-	private double[] posArrayY = new double[posArraySize];
+	private int posArraySize;
+	private double[] posArrayX;
+	private double[] posArrayY;
 	
 	private ArrayList<Magnet> magnets = new ArrayList<Magnet>();
 	
-	public World(int width, int height) {
+	public World(int posArraySize) {
 		//class constructor
+		this.posArraySize = posArraySize;
+		posArrayX = new double[posArraySize];
+		posArrayY = new double[posArraySize];
+		
 		for (int i = 0; i < posArraySize; i++) {
+			
 			posArrayX[i] = i * 10;
 			posArrayY[i] = i * 10;
 		}
-		
-		homeX = width/2;
-		homeY = height/2;
 		
 		//DefaultSetups.setup1(this);
 		
@@ -64,6 +66,9 @@ public class World {
 		stopped = false;
 		magnets.clear();
 		Magnet.totalMagnets = 0;
+		
+		//setup magnets
+		DefaultSetups.setup1(this);
 	}
 
 	
@@ -117,7 +122,7 @@ public class World {
 		}
 		
 		if (stopped == true) {
-			System.out.println("stopped ");
+			//System.out.println("stopped ");
 		}
 	}
 	
@@ -130,6 +135,14 @@ public class World {
 	public void setArmY(double armY) {this.armY = armY;}
 	public void setVelX(double velX) {this.velX = velX;}
 	public void setVelY(double velY) {this.velY = velY;}
+	public void setHomeX(double homeX) {this.homeX = homeX;}
+	public void setHomeY(double homeY) {this.homeY = homeY;}
+	public void setDefaultCoef(double defaultCoef) {this.defaultCoef = defaultCoef;}
+	public void setHomeCoef(double homeCoef) {this.homeCoef = homeCoef;}
+	public void setFricition(double friction) {this.friction = friction;}
+	public void setMaxStopDist(double maxStopDist) {this.maxStopDist = maxStopDist;}
+	
+	
 	
 	//getters
 	public double getArmX() {return armX;}
