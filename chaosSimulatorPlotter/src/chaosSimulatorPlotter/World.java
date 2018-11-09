@@ -64,6 +64,10 @@ public class World {
 		velX = startVelX;
 		velY = startVelY;
 		stopped = false;
+		for (int i = 0; i < posArraySize; i++) {	
+			posArrayX[i] = i * 10;
+			posArrayY[i] = i * 10;
+		}
 		magnets.clear();
 		Magnet.totalMagnets = 0;
 		

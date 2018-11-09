@@ -30,8 +30,8 @@ public class Main {
 		int minY = 0;
 		int maxY = 800;
 		
-		int resX = 3;
-		int resY = 3;
+		int resX = 10;
+		int resY = 10;
 		
 		int fps = 60;
 		
@@ -53,9 +53,10 @@ public class Main {
 	
 		//plot points
 		double[][] finalPos = new double[numPoints][2];
+		int[] tickCounter = new int[numPoints];
 		boolean stopped;
 		for (int i = 0; i < numPoints; i++) {
-			System.out.println("generating point: "+Arrays.toString(points[i]));
+			System.out.println("generating point "+i+": "+Arrays.toString(points[i]));
 			
 			//for each point...
 			//reset world
@@ -67,9 +68,13 @@ public class Main {
 			world.setArmX(points[i][0]);
 			world.setArmY(points[i][1]);
 			
+			tickCounter[i] = 0;
+			
 			stopped = false;
 			while (!stopped) {
 				world.tick(fps);
+				
+				tickCounter[i]++;
 				
 				if (world.getStopped() == true) {
 					stopped = true;
@@ -81,7 +86,7 @@ public class Main {
 			
 			
 			//print/send to file
-			System.out.println("final is: "+Arrays.toString(finalPos[i]));
+			System.out.println("final took "+tickCounter[i]+" ticks : "+Arrays.toString(finalPos[i]));
 			
 		}
 		
