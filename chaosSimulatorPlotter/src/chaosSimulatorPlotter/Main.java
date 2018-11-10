@@ -1,10 +1,13 @@
 package chaosSimulatorPlotter;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		//setup vars
 		int width = 800;
 		int height = 800;
@@ -36,11 +39,11 @@ public class Main {
 		int fps = 60;
 		
 		//generate points
-		int gapX = (maxX - minX)/(resX - 1);
-		int gapY = (maxY - minY)/(resY - 1);
+		double gapX = ((double)maxX - minX)/(resX - 1);
+		double gapY = ((double)maxY - minY)/(resY - 1);
 		
 		int numPoints = resX*resY;
-		int[][] points = new int[numPoints][2];
+		double[][] points = new double[numPoints][2];
 		
 		for (int i = 0; i < resX; i++) {
 			for (int j = 0; j < resY; j++) {
@@ -50,13 +53,15 @@ public class Main {
 			}
 		}		
 		//System.out.println(Arrays.deepToString(points));
-	
+		
+		//open file
+		PrintWriter writer = new PrintWriter("output.txt","UTF-8");
+		
 		//plot points
 		double[][] finalPos = new double[numPoints][2];
 		int[] tickCounter = new int[numPoints];
 		boolean stopped;
 		for (int i = 0; i < numPoints; i++) {
-			System.out.println("generating point "+i+": "+Arrays.toString(points[i]));
 			
 			//for each point...
 			//reset world
@@ -78,18 +83,28 @@ public class Main {
 				
 				if (world.getStopped() == true) {
 					stopped = true;
-					finalPos[i][0] = Math.round(world.getArmX());
-					finalPos[i][1] = Math.round(world.getArmY());
+					finalPos[i][0] = world.getArmX();
+					finalPos[i][1] = world.getArmY();
 					
 				}
 			}
 			
 			
-			//print/send to file
-			System.out.println("final took "+tickCounter[i]+" ticks : "+Arrays.toString(finalPos[i]));
+			//print
+			System.out.println("point " +i+": "+Arrays.toString(points[i]) + " took "+tickCounter[i]+" ticks: "+Arrays.toString(finalPos[i]));
 			
+			
+			//write to file
+			writer.println("["+points[i][0]+", "+points[i][1]+", "+finalPos[i][0]+", "+finalPos[i][1]+"]");
+			
+			
+			
+		
 		}
 		
+		//close file
+		writer.close();
+		System.out.println("data in output.txt");
 	
 	
 	
