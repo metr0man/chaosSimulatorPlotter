@@ -34,22 +34,25 @@ public class Main {
 		int minY = 0;
 		int maxY = 800;
 		
-		int resX = 200;
-		int resY = 200;
+		int resX = 10;
+		int resY = 10;
 		
 		int fps = 60;
 		
 		//generate points
 		double gapX = ((double)maxX - minX)/(resX - 1);
 		double gapY = ((double)maxY - minY)/(resY - 1);
+		double spaceX = 0;
+		double spaceY = 0;
+		
 		
 		int numPoints = resX*resY;
 		double[][] points = new double[numPoints][2];
 		
 		for (int i = 0; i < resX; i++) {
 			for (int j = 0; j < resY; j++) {
-				points[i*resX+j][0] = i*gapX+minX;
-				points[i*resX+j][1] = j*gapY+minY;
+				points[i*resX+j][0] = i*gapX+minX+spaceX;
+				points[i*resX+j][1] = j*gapY+minY+spaceY;
 				
 			}
 		}		
@@ -126,10 +129,10 @@ public class Main {
 		}
 		//stop timer
 		final long endTime = System.currentTimeMillis();
-		int execTime = ((int)endTime - (int)startTime) * 1000;
-		double timePerPoint = (double)execTime/numPoints/1000;
-		System.out.println("program took: "+execTime+"s, "+timePerPoint+" ms per tick");
-		logWriter.println("program took: "+execTime+"s, "+timePerPoint+" ms per tick");
+		int execTime = ((int)endTime - (int)startTime) / 1000;
+		double timePerPoint = (double)execTime/numPoints;
+		System.out.println("program took: "+execTime+" s, "+timePerPoint+" s per point");
+		logWriter.println("program took: "+execTime+" s, "+timePerPoint+" s per point");
 		
 		//close file
 		writer.close();
