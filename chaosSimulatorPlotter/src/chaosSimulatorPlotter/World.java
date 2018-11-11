@@ -158,6 +158,8 @@ public class World {
 	public double getDefaultCoef() {return defaultCoef;}
 	public ArrayList<Magnet> getMagnets() {return magnets;}
 	public boolean getStopped() {return stopped;}
+	public double[] getPosArrayX() {return posArrayX;}
+	public double[] getPosArrayY() {return posArrayY;}
 	
 }
 

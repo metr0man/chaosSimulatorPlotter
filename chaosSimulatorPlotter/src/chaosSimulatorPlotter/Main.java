@@ -11,6 +11,7 @@ public class Main {
 		//setup vars
 		int width = 800;
 		int height = 800;
+		int maxTicks = 100000;
 		
 		int posArraySize = 1000;
 		
@@ -33,8 +34,8 @@ public class Main {
 		int minY = 0;
 		int maxY = 800;
 		
-		int resX = 10;
-		int resY = 10;
+		int resX = 200;
+		int resY = 200;
 		
 		int fps = 60;
 		
@@ -56,6 +57,10 @@ public class Main {
 		
 		//open file
 		PrintWriter writer = new PrintWriter("output.txt","UTF-8");
+		PrintWriter logWriter = new PrintWriter("log.txt","UTF-8");
+		
+		//start timer
+		final long startTime = System.currentTimeMillis();
 		
 		//plot points
 		double[][] finalPos = new double[numPoints][2];
@@ -81,6 +86,24 @@ public class Main {
 				
 				tickCounter[i]++;
 				
+				if (tickCounter[i] > maxTicks) {
+					System.out.println("error: max ticks hit");
+					System.out.println(world.getArmX());
+					System.out.println(world.getArmX());
+					System.out.println(Arrays.toString(world.getPosArrayX()));
+					System.out.println(Arrays.toString(world.getPosArrayY()));
+					logWriter.println("error: max ticks hit");
+					logWriter.println(world.getArmX());
+					logWriter.println(world.getArmX());
+					logWriter.println(Arrays.toString(world.getPosArrayX()));
+					logWriter.println(Arrays.toString(world.getPosArrayY()));
+					
+					
+					finalPos[i][0] = -100;
+					finalPos[i][1] = -100;
+					stopped = true;
+				}
+				
 				if (world.getStopped() == true) {
 					stopped = true;
 					finalPos[i][0] = world.getArmX();
@@ -92,7 +115,7 @@ public class Main {
 			
 			//print
 			System.out.println("point " +i+": "+Arrays.toString(points[i]) + " took "+tickCounter[i]+" ticks: "+Arrays.toString(finalPos[i]));
-			
+			logWriter.println("point " +i+": "+Arrays.toString(points[i]) + " took "+tickCounter[i]+" ticks: "+Arrays.toString(finalPos[i]));
 			
 			//write to file
 			writer.println("["+points[i][0]+", "+points[i][1]+", "+finalPos[i][0]+", "+finalPos[i][1]+"]");
@@ -101,9 +124,16 @@ public class Main {
 			
 		
 		}
+		//stop timer
+		final long endTime = System.currentTimeMillis();
+		int execTime = ((int)endTime - (int)startTime) * 1000;
+		double timePerPoint = (double)execTime/numPoints/1000;
+		System.out.println("program took: "+execTime+"s, "+timePerPoint+" ms per tick");
+		logWriter.println("program took: "+execTime+"s, "+timePerPoint+" ms per tick");
 		
 		//close file
 		writer.close();
+		logWriter.close();
 		System.out.println("data in output.txt");
 	
 	
