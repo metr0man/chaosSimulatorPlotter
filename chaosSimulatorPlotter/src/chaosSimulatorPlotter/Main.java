@@ -9,16 +9,16 @@ public class Main{
 	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		//thread vars
-		int numThreads = 10;
+		int numThreads = 4;
 		
 		//setup vars
 		int minX = 0;
-		int maxX = 800;
+		int maxX = 400;
 		int minY = 0;
-		int maxY = 800;
+		int maxY = 400;
 		
-		int resX = 50;
-		int resY = 50;
+		int resX = 20;
+		int resY = 20;
 
 		//define vars for later
 		int numPoints = resX*resY;
@@ -60,14 +60,9 @@ public class Main{
 		//wait for threads to finish
 		boolean active = true;
 		while (active) {
+			active = false;
 			for (int i = 0; i < numThreads; i++) {
-				boolean tempActive = true;
-				if (threadArray[i].finished) {
-					active = false;
-				} else {
-					tempActive = false;
-				}
-				if (!(tempActive && !active)) {
+				if (!threadArray[i].finished) {
 					active = true;
 				}
 			}
