@@ -72,7 +72,7 @@ public class World {
 		Magnet.totalMagnets = 0;
 		
 		//setup magnets
-		DefaultSetups.setup3(this);
+		DefaultSetups.setup1(this);
 	}
 
 	
