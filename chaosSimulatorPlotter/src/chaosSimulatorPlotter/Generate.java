@@ -47,12 +47,26 @@ public class Generate extends Thread{
 		int numPoints = points.length;
 		output = new double[numPoints][4];
 		
+		//start timer
+		final long startTime = System.currentTimeMillis();
+
+		
 		//plot points
 		double[][] finalPos = new double[numPoints][2];
 		int[] tickCounter = new int[numPoints];
 		boolean stopped;
 		for (int i = 0; i < numPoints; i++) {
-			
+			if(i%50 == 0 && i != 0) {
+				//update timer
+				long timeNow = System.currentTimeMillis();
+				long timeElapsed = timeNow-startTime;
+				double percentDone = ((double)i/numPoints);
+				long predictedTime = (long) (timeElapsed/percentDone)-timeElapsed;
+				int predictedTimeSeconds = ((int) predictedTime)/1000;
+				
+				//print
+				System.out.println("Thread "+threadNum+": "+i+"/"+numPoints+", "+predictedTimeSeconds+"s remaining");
+			}
 			//for each point...
 			//reset world
 			world.resetWorld();

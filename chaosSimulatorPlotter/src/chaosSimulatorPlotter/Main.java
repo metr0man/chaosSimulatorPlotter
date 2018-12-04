@@ -13,9 +13,9 @@ public class Main{
 		
 		//setup vars
 		int minX = 0;
-		int maxX = 400;
+		int maxX = 800;
 		int minY = 0;
-		int maxY = 400;
+		int maxY = 800;
 		
 		int resX = 20;
 		int resY = 20;
@@ -81,6 +81,15 @@ public class Main{
 		double execTime = (endTime - startTime)/(double)1000;
 		double timePerPoint = execTime/numPoints;
 		System.out.println("program took: "+execTime+" s, "+timePerPoint+" s per point");
+		
+		//sleep a little bit because problems?
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		//write data
 		int lenPoints = 0;
